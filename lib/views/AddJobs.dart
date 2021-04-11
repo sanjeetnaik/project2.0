@@ -1,3 +1,5 @@
+import 'package:chat/views/search.dart';
+
 import '../helper/authenticate.dart';
 import '../helper/constants.dart';
 import '../helper/helperfunctions.dart';
@@ -63,7 +65,16 @@ class _AddJobsState extends State<AddJobs> {
       appBar: AppBar(
         title: Text("Add Jobs"),
         actions: [
-        
+         IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+                size: 35,
+              ),
+              onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Search()));
+              }),
             PopupMenuButton<String>(
             onSelected: (value){
               if(value=="Logout")
