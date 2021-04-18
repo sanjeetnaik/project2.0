@@ -1,4 +1,3 @@
-
 import 'package:firebase_core/firebase_core.dart';
 
 import 'helper/authenticate.dart';
@@ -17,39 +16,43 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   bool userIsLoggedIn;
-  bool isLoading=true;
+  bool isLoading = true;
   @override
   void initState() {
-     Firebase.initializeApp().whenComplete(() { 
-      
-      setState(() {isLoading=false;});
+    Firebase.initializeApp().whenComplete(() {
+      setState(() {
+        isLoading = false;
+      });
     });
     getLoggedInState();
     super.initState();
   }
 
   getLoggedInState() async {
-    await HelperFunctions.getUserLoggedInSharedPreference().then((value){
+    await HelperFunctions.getUserLoggedInSharedPreference().then((value) {
       setState(() {
-        userIsLoggedIn  = value;
+        userIsLoggedIn = false;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return isLoading?Center(child:CircularProgressIndicator()): MaterialApp(
-      title: 'Chat',
-      debugShowCheckedModeBanner: false,
-
-      home: userIsLoggedIn != null ?  userIsLoggedIn ? Home() : Authenticate()
-          : Container(
-        child: Center(
-          child: Authenticate(),
-        ),
-      ),
-    );
+    return isLoading
+        ? Center(child: CircularProgressIndicator())
+        : MaterialApp(
+            title: 'Chat',
+            debugShowCheckedModeBanner: false,
+            home: userIsLoggedIn != null
+                ? userIsLoggedIn
+                    ? Home()
+                    : Authenticate()
+                : Container(
+                    child: Center(
+                      child: Authenticate(),
+                    ),
+                  ),
+          );
   }
 }

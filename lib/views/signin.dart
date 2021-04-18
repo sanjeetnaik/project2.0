@@ -1,5 +1,3 @@
-
-
 import '../helper/helperfunctions.dart';
 import '../services/auth.dart';
 import '../services/database.dart';
@@ -37,7 +35,7 @@ class _SignInState extends State<SignIn> {
           .signInWithEmailAndPassword(
               emailEditingController.text, passwordEditingController.text)
           .then((result) async {
-        if (result != null)  {
+        if (result != null) {
           QuerySnapshot userInfoSnapshot =
               await DatabaseMethods().getUserInfo(emailEditingController.text);
 
@@ -46,9 +44,14 @@ class _SignInState extends State<SignIn> {
               userInfoSnapshot.docs[0].data()["userName"]);
           HelperFunctions.saveUserEmailSharedPreference(
               userInfoSnapshot.docs[0].data()["userEmail"]);
-          HelperFunctions.saveCompanyNameSharedPreference(userInfoSnapshot.docs[0].data()["companyName"]);
-          HelperFunctions.saveUserTypeSharedPreference(userInfoSnapshot.docs[0].data()["userType"]);
-          HelperFunctions.saveURLSharedPreference(userInfoSnapshot.docs[0].data()['url']);
+          if (userInfoSnapshot.docs[0].data()["userType"] == "Employeer") {
+            HelperFunctions.saveCompanyNameSharedPreference(
+                userInfoSnapshot.docs[0].data()["companyName"]);
+          }
+          HelperFunctions.saveUserTypeSharedPreference(
+              userInfoSnapshot.docs[0].data()["userType"]);
+          HelperFunctions.saveURLSharedPreference(
+              userInfoSnapshot.docs[0].data()['url']);
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => Home()));
         } else {
@@ -64,12 +67,12 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    
-      appBar:  AppBar(
+      appBar: AppBar(
         backgroundColor: Color(0xff36B6C5),
-        title:Text(
-              "Discuss!",
-              style: TextStyle(letterSpacing: 2.5),),
+        title: Text(
+          "Studentship!",
+          style: TextStyle(letterSpacing: 2.5),
+        ),
       ),
       resizeToAvoidBottomInset: false,
       body: isLoading
@@ -77,16 +80,12 @@ class _SignInState extends State<SignIn> {
               child: Center(child: CircularProgressIndicator()),
             )
           : SafeArea(
-                      child: Container(
-            
+              child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 40),
                 child: Center(
                   child: Column(
                     children: [
                       SizedBox(height: 80.0),
-              
-              
-                      
                       Form(
                         key: formKey,
                         child: Column(
@@ -106,9 +105,9 @@ class _SignInState extends State<SignIn> {
                             TextFormField(
                               obscureText: true,
                               validator: (val) {
-                               return val.length < 6
-                                      ? "Enter Password 6+ characters"
-                                      : null;
+                                return val.length < 6
+                                    ? "Enter Password 6+ characters"
+                                    : null;
                               },
                               style: simpleTextStyle(),
                               controller: passwordEditingController,
@@ -124,9 +123,7 @@ class _SignInState extends State<SignIn> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           GestureDetector(
-                            onTap: () {
-                             
-                            },
+                            onTap: () {},
                             child: Container(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 8),
@@ -148,13 +145,11 @@ class _SignInState extends State<SignIn> {
                           padding: EdgeInsets.symmetric(vertical: 16),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
-                              color:  Color(0xff36B6C5)
-                              ),
+                              color: Color(0xff36B6C5)),
                           width: MediaQuery.of(context).size.width,
                           child: Text(
                             "Login",
-                            
-                            style: TextStyle(color: Colors.black,fontSize: 20),
+                            style: TextStyle(color: Colors.black, fontSize: 20),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -162,7 +157,6 @@ class _SignInState extends State<SignIn> {
                       SizedBox(
                         height: 16,
                       ),
-                    
                       SizedBox(
                         height: 16,
                       ),
@@ -180,7 +174,6 @@ class _SignInState extends State<SignIn> {
                             child: Text(
                               "Register now",
                               style: TextStyle(
-                                  
                                   fontSize: 16,
                                   decoration: TextDecoration.underline),
                             ),
@@ -194,9 +187,7 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
               ),
-          ),
-            
+            ),
     );
-    
   }
 }

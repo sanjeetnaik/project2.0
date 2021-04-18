@@ -78,8 +78,10 @@ class _SignUpState extends State<SignUp> {
                   "userType": userType,
                   "companyName": companyNameEditingController.text
                 };
-      String path=isEmployee?"cv/${emailEditingController.text}":"brochure/${emailEditingController.text}";
-          databaseMethods.addUserInfo(userDataMap,path,file);
+          String path = isEmployee
+              ? "cv/${emailEditingController.text}"
+              : "brochure/${emailEditingController.text}";
+          databaseMethods.addUserInfo(userDataMap, path, file);
 
           HelperFunctions.saveUserLoggedInSharedPreference(true);
           HelperFunctions.saveUserNameSharedPreference(
@@ -102,7 +104,7 @@ class _SignUpState extends State<SignUp> {
       appBar: AppBar(
         backgroundColor: Color(0xFF35629E),
         title: Text(
-          "Discuss!",
+          "Studentship!",
           style: TextStyle(letterSpacing: 2.5),
         ),
       ),
@@ -335,22 +337,22 @@ class _SignUpState extends State<SignUp> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          if(file== null)
-                          {
+                          if (file == null) {
                             final snackBar = SnackBar(
                               duration: Duration(seconds: 2),
                               backgroundColor: Colors.red,
-                              content:isEmployee? Text('Please upload CV'):Text('Please upload brochure'),
-                              
+                              content: isEmployee
+                                  ? Text('Please upload CV')
+                                  : Text('Please upload brochure'),
                             );
 
                             // Find the ScaffoldMessenger in the widget tree
                             // and use it to show a SnackBar.
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
-                                return;
+                            return;
                           }
-                          
+
                           singUp();
                         },
                         child: Container(
@@ -401,7 +403,6 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
             ),
-            
     );
   }
 }
